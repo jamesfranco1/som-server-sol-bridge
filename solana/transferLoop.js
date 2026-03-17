@@ -3,7 +3,7 @@ import {
   createTransferCheckedInstruction,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { getAtas, WSOL_MINT, WSOL_DECIMALS } from "./helpers.js";
+import { getAtas, getTokenMint, getTokenDecimals } from "./helpers.js";
 
 const LOG_SIZE = 200;
 const TICK_INTERVAL_MS = 2000;
@@ -52,6 +52,9 @@ export class TransferEngine {
     this.transferCount = 0;
     this.firstTransferConfirmed = false;
 
+    this.mint = getTokenMint();
+    this.decimals = getTokenDecimals();
+
     this.userAta = null;
     this.creatorAta = null;
     this.agentAta = null;
@@ -79,7 +82,7 @@ export class TransferEngine {
     const agentPubkey = this.agentWallet || this.creatorWallet;
 
     const { userAta, creatorAta, agentAta } = await getAtas(
-      WSOL_MINT,
+      this.mint,
       userPubkey,
       creatorWallet,
       agentPubkey
@@ -121,11 +124,11 @@ export class TransferEngine {
       tx.add(
         createTransferCheckedInstruction(
           this.userAta,
-          WSOL_MINT,
+          this.mint,
           this.creatorAta,
           this.gatewayKey.publicKey,
           creatorAmount,
-          WSOL_DECIMALS,
+          this.decimals,
           [],
           TOKEN_PROGRAM_ID
         )
@@ -135,11 +138,11 @@ export class TransferEngine {
         tx.add(
           createTransferCheckedInstruction(
             this.userAta,
-            WSOL_MINT,
+            this.mint,
             this.agentAta,
             this.gatewayKey.publicKey,
             agentAmount,
-            WSOL_DECIMALS,
+            this.decimals,
             [],
             TOKEN_PROGRAM_ID
           )
