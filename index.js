@@ -179,4 +179,4 @@ app.get("/status", (_req, res) => {
 });
 
 const port = Number(process.env.PORT || 4020);
-app.listen(port, () => console.log(`Flow402x backend on :${port}`));
+app.listen(port, () => console.log(`flow402 backend on :${port}`));

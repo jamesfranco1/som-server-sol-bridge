@@ -153,7 +153,7 @@ export class TransferEngine {
         new TransactionInstruction({
           keys: [],
           programId: new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"),
-          data: Buffer.from(`flow402x-${Date.now()}`),
+          data: Buffer.from(`flow402-${Date.now()}`),
         })
       );
 
