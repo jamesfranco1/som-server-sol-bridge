@@ -44,7 +44,7 @@ app.get("/config", (_req, res) => {
     tokenMint: getTokenMint().toString(),
     tokenDecimals: getTokenDecimals(),
     ratePerSecond: Number(process.env.LAMPORTS_PER_SECOND || "1000"),
-    agentWalletConfigured: !!process.env.AGENT_WALLET,
+    agentWallet: process.env.AGENT_WALLET || null,
     supportedTypes: ["video", "feed", "analysis"],
     version: "0.2.0",
   });
